@@ -4,7 +4,7 @@
 
 import pygame
 from defaults import window, running, clock, fps
-import keys
+from character import michael, bell
 
 ##############################
 # SCENES
@@ -13,8 +13,9 @@ import keys
 class main_menu:
     def handle():
         window.fill((255,255,255))
-
-
+        michael.handle()
+        bell.x = 200
+        bell.handle()
 
 scene = main_menu
 
@@ -28,11 +29,6 @@ while running:
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
             running = False
-        if i.type == pygame.KEYDOWN:
-            keys.down = i.key
-        if i.type == pygame.KEYUP:
-            keys.up = i.key
-    keys.held = pygame.key.get_pressed()
     pygame.display.update()
 
 pygame.quit
