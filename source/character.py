@@ -81,15 +81,19 @@ class character:
         self.facing = "left"
         self.x = 100
         self.y = 100
+
     def handle(self):
         self.animate(0.1)
         self.render(self.x,self.y)
+
     def render(self,x,y):
         window.blit(self.sprite_list[math.floor(self.sprite)],(x - camera.x,y - camera.y))
+        
     def animate(self,animation_rate):
         self.sprite += animation_rate
         if(self.sprite > len(self.sprite_list)):
             self.sprite = 0
+            
     def move(self,amount,direction):
         match direction:
             case "left":
