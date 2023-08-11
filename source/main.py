@@ -3,21 +3,29 @@
 ##############################
 
 import pygame
-from defaults import window, running, clock, fps
+from defaults import window, running, clock, fps, handle_event
 from character import michael, bell
+
+##############################
+# PLAYER SHIT
+##############################
+
+class player:
+    character = None
+
+player.character = bell
 
 ##############################
 # SCENES
 ##############################
 
-class main_menu:
+class game:
     def handle():
-        window.fill((255,255,255))
-        michael.handle()
-        bell.x = 200
-        bell.handle()
+        keys = handle_event()
+        window.fill((50,50,50))
+        player.character.handle(keys[0],keys[1],keys[2])
 
-scene = main_menu
+scene = game
 
 ##############################
 # GAME LOOP
@@ -26,9 +34,6 @@ scene = main_menu
 while running:
     clock.tick(fps)
     scene.handle()
-    for i in pygame.event.get():
-        if i.type == pygame.QUIT:
-            running = False
     pygame.display.update()
 
 pygame.quit

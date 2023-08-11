@@ -49,3 +49,26 @@ class camera:
 ##############################
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
+
+##############################
+# EVENT C.R.A.P (Call, Responds (with), Action, Parameters)
+##############################
+
+def handle_event():
+    key_down = None
+    key_up = None
+    for i in pygame.event.get():
+        if i.type == pygame.QUIT:
+            pygame.quit()
+        if i.type == pygame.KEYDOWN:
+            try:
+                key_down = i.unicode
+            except:
+                key_down = i.key
+        if i.type == pygame.KEYUP:
+            try:
+                key_up = i.unicode
+            except:
+                key_up = i.key
+    return [pygame.key.get_pressed(),key_down,key_up]
+    
