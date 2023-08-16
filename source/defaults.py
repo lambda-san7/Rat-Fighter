@@ -17,7 +17,7 @@ running = True
 # WINDOW
 ##############################
 
-def create_window(w=900,h=600,title="Blank",favicon="favicon.png"):
+def create_window(w=0,h=0,title="Blank",favicon="favicon.png"):
     window = pygame.display.set_mode((w,h),pygame.RESIZABLE)
     pygame.display.set_caption(title)
     #pygame.display.set_icon(favicon)

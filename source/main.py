@@ -4,32 +4,38 @@
 
 import pygame
 from defaults import window, running, clock, fps, handle_event
-from character import michael, bell
+from character import michael, bell,lazarus
+from map import testing, blank, old_ratt_town
 
 ##############################
-# PLAYER SHIT
+# MATCH
 ##############################
 
-class player:
+class match:
     character = None
+    stage = None
 
-player.character = bell
+match.character = bell
+match.stage = old_ratt_town
 
 ##############################
 # SCENES
 ##############################
 
+michael.x = 500
+
 class game:
     def handle():
         keys = handle_event()
         window.fill((50,50,50))
-        player.character.handle(keys[0],keys[1],keys[2])
+        match.stage.render()
+        match.character.handle(keys[0],keys[1],keys[2])
 
 scene = game
 
 ##############################
 # GAME LOOP
-##############################
+############################## 
 
 while running:
     clock.tick(fps)
