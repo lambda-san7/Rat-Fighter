@@ -16,7 +16,9 @@ class collisions:
         self.air = False
         self.climbing = False
     def get(self,object,map,collidables=[]):
-        if self.y < map.y - object.h:
+        if self.y < map.y - object.h: # on ground
+            self.grounded = True
+            
 
 ##############################
 # SPRITES
@@ -148,12 +150,14 @@ class character:
         self.shadow = character_shadow()
         self.control = False
         self.stun = 0
+        self.collisions = collisions()
 
     ##############################
     # CHARACTER >> HANDLE
     ##############################
 
     def handle(self,key_held,key_down,key_up,map):
+        #self.collisions.get()
         self.sprite_list = eval(f"self.sprite_sheet.idle_{self.facing}")
         self.controller(key_held,key_down,key_up)
         self.physics(map)
@@ -281,10 +285,6 @@ class character:
             self.facing = "right"
             self.sprite_list = self.sprite_sheet.run_right
     
-    
-
-        
-
 michael = character("michael",speed=18,jump=20,jump_count=1)
 bell = character("bell",speed=18,jump=20,jump_count=1)
 lazarus = character("lazarus",speed=20,jump=20,jump_count=2)

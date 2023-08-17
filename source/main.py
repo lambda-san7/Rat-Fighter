@@ -16,7 +16,7 @@ class match:
     stage = None
 
 match.character = bell
-match.stage = old_ratt_town
+match.stage = blank
 
 ##############################
 # SCENES
@@ -29,7 +29,7 @@ class game:
         keys = handle_event()
         window.fill((50,50,50))
         match.stage.render()
-        match.character.handle(keys[0],keys[1],keys[2])
+        match.character.handle(keys[0],keys[1],keys[2],old_ratt_town)
 
 scene = game
 

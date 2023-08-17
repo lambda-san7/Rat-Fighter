@@ -24,20 +24,20 @@ class map:
     def __init__(self,folder):
         #self.prop_w = prop_w
         #self.prop_h = prop_h
-        self.floor = sprite(
+        self.platform = sprite(
             f"{folder}/floor.gif",
-            w=(400 + (pygame.display.Info().current_w - 400)),
-            h=(100 + (pygame.display.Info().current_h - 600))
+            w=(400),
+            h=(200)
         ).sprite
         #self.prop = sprite(f"{folder}/prop.gif",w=self.w,h=self.h).sprite
         self.back = sprite(
             f"{folder}/back.gif",
-            w=(400 + (pygame.display.Info().current_w - 400)),
-            h=(250 + (pygame.display.Info().current_h - 250))
+            w=(pygame.display.Info().current_w),
+            h=(pygame.display.Info().current_h)
         ).sprite
     def render(self):
         window.blit(self.back,(0,0))
-        window.blit(self.floor,(0,500))
+        window.blit(self.platform,(0,500))
 
 testing = map("testing")
 blank = map("blank")
