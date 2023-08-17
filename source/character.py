@@ -14,9 +14,19 @@ class collisions:
     def __init__(self):
         self.grounded = False
         self.air = False
+        self.above_ground = False
         self.climbing = False
+
     def get(self,object,map,collidables=[]):
+        
+        self.grounded = False
+        self.air = False
+        self.above_ground = False
+        self.climbing = False
+
         if self.y < map.y - object.h: # on ground
+            self.grounded = True
+        if self.y < map.y - object.h: # above the ground
             self.grounded = True
             
 
@@ -169,10 +179,10 @@ class character:
     ##############################
 
     def render(self,x,y):
-        self.shadow.render(
-            self.x,
-            500 + 5
-        )
+    #    self.shadow.render(
+     #       self.x,
+      #      (pygame.display.Info().current_h / 2) + 2
+       # )
         window.blit(self.sprite_list[math.floor(self.sprite)],(x - camera.x,(y + 15) - camera.y))
         
     ##############################
@@ -220,17 +230,17 @@ class character:
         ##############################
 
         self.y -= self.vertical_velocity
-        if self.y == 500 - self.h: # On Ground
+        if self.y == (pygame.display.Info().current_h / 2) - self.h: # On Ground
             self.control = True
             self.curr_speed = self.speed
             self.vertical_velocity = 0
             self.curr_jumps = self.jumps
             return
-        if self.y > 500 - self.h: # Below the ground
+        if self.y > (pygame.display.Info().current_h / 2) - self.h: # Below the ground
             self.vertical_velocity = 0
-            self.y = 500 - self.h
+            self.y = (pygame.display.Info().current_h / 2) - self.h
             return
-        if self.y < 500 - self.h: # In the Air
+        if self.y < (pygame.display.Info().current_h / 2) - self.h: # In the Air
             self.sprite_list = eval(f"self.sprite_sheet.falling_{self.facing}")
             self.curr_speed = self.air_speed
         if self.vertical_velocity >= self.terminal_velocity: # check to see if velocity is max

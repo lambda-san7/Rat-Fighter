@@ -15,7 +15,7 @@ class match:
     character = None
     stage = None
 
-match.character = bell
+match.character = lazarus
 match.stage = blank
 
 ##############################
