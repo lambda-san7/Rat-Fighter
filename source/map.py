@@ -23,7 +23,7 @@ class sprite:
 class map:
     def __init__(self,folder,w=800,h=400):
         self.x = (pygame.display.Info().current_w / 2) - (w / 2)
-        self.y = (pygame.display.Info().current_h / 2)
+        self.y = (pygame.display.Info().current_h / 2) + 100
         self.w = w
         self.h = h
         self.platform = sprite(
@@ -39,7 +39,7 @@ class map:
         ).sprite
     def render(self):
         window.blit(self.back,(0,0))
-        window.blit(self.platform,(self.x,self.y))
+        window.blit(self.platform,(self.x - camera.x,self.y - camera.y))
 
 testing = map("testing")
 blank = map("blank")

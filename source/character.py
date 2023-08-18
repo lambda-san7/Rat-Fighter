@@ -15,19 +15,33 @@ class collisions:
         self.grounded = False
         self.air = False
         self.above_ground = False
+        self.underground = False
         self.climbing = False
 
     def get(self,object,map,collidables=[]):
-        
+
         self.grounded = False
         self.air = False
         self.above_ground = False
+        self.underground = False
         self.climbing = False
 
-        if self.y < map.y - object.h: # on ground
+        if ((object.y == map.y - object.h) and
+            (object.x + object.w >= map.x) and
+            (object.x <= map.x + map.w)
+            ): # on ground
             self.grounded = True
-        if self.y < map.y - object.h: # above the ground
-            self.grounded = True
+
+        if ((object.y + object.h < map.y) and
+            (object.y > map.y + map.h)): # above the ground
+            self.air = True
+
+        if ((object.y + object.h > map.y) and
+            (object.x + object.w >= map.x) and
+            (object.x <= map.x + map.w) and
+            (object.y < map.y + map.h)
+            ): # in the ground
+            self.underground = True
             
 
 ##############################
@@ -141,7 +155,7 @@ class character:
     def __init__(self,name,w=100,h=100,speed=18,jump=18,jump_count=1):
         self.name = name
         self.w = w
-        self.h = h
+        self.h = h 
         self.sprite_sheet = sprite_sheet(name)
         self.sprite_list = self.sprite_sheet.idle_left
         self.sprite = 0
@@ -152,7 +166,7 @@ class character:
         self.jump = jump
         self.jumps = jump_count
         self.curr_jumps = jump_count
-        self.x = 100
+        self.x = 600
         self.y = 100
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
@@ -167,7 +181,6 @@ class character:
     ##############################
 
     def handle(self,key_held,key_down,key_up,map):
-        #self.collisions.get()
         self.sprite_list = eval(f"self.sprite_sheet.idle_{self.facing}")
         self.controller(key_held,key_down,key_up)
         self.physics(map)
@@ -179,6 +192,7 @@ class character:
     ##############################
 
     def render(self,x,y):
+        camera.x = self.x - (pygame.display.Info().current_w / 2)
     #    self.shadow.render(
      #       self.x,
       #      (pygame.display.Info().current_h / 2) + 2
@@ -199,20 +213,22 @@ class character:
     ##############################
 
     def physics(self,map):
-
+        self.y -= self.vertical_velocity
+        self.collisions.get(self,map)
+        
         ##############################
         # CHARACTER >> PHYSICS >> HORIZONTAL
         ##############################
 
-        if self.x <= 0:
-            self.horizontal_velocity = self.horizontal_velocity
-            self.stun = 5
-            self.x = self.w + 1
+#        if self.x <= 0:
+ #           self.horizontal_velocity = self.horizontal_velocity
+  #          self.stun = 5
+   #         self.x = self.w + 1
 
-        if (self.x + self.w) >= pygame.display.Info().current_w:
-            self.horizontal_velocity = -self.horizontal_velocity
-            self.stun = 5
-            self.x = pygame.display.Info().current_w - self.w
+    #    if (self.x + self.w) >= pygame.display.Info().current_w:
+     #       self.horizontal_velocity = -self.horizontal_velocity
+      #      self.stun = 5
+       #     self.x = pygame.display.Info().current_w - self.w
             #self.x -= (pygame.display.Info().current_w - self.w ) + 1
 
         if self.horizontal_velocity < 0:
@@ -224,27 +240,23 @@ class character:
         if self.horizontal_velocity == 0:
             self.horizontal_velocity = 0
         
-        
         ##############################
         # CHARACTER >> PHYSICS >> VERTICAL
         ##############################
 
-        self.y -= self.vertical_velocity
-        if self.y == (pygame.display.Info().current_h / 2) - self.h: # On Ground
+        if self.collisions.grounded: # On Ground
             self.control = True
             self.curr_speed = self.speed
             self.vertical_velocity = 0
             self.curr_jumps = self.jumps
             return
-        if self.y > (pygame.display.Info().current_h / 2) - self.h: # Below the ground
+        if self.collisions.underground: # Below the ground
             self.vertical_velocity = 0
-            self.y = (pygame.display.Info().current_h / 2) - self.h
+            self.y = map.y - self.h
             return
-        if self.y < (pygame.display.Info().current_h / 2) - self.h: # In the Air
+        if self.collisions.air: # In the Air
             self.sprite_list = eval(f"self.sprite_sheet.falling_{self.facing}")
             self.curr_speed = self.air_speed
-        if self.vertical_velocity >= self.terminal_velocity: # check to see if velocity is max
-            self.vertical_velocity = self.terminal_velocity
         self.vertical_velocity -= 1
 
     ##############################
@@ -298,3 +310,4 @@ class character:
 michael = character("michael",speed=18,jump=20,jump_count=1)
 bell = character("bell",speed=18,jump=20,jump_count=1)
 lazarus = character("lazarus",speed=20,jump=20,jump_count=2)
+testing_character = character("lazarus",speed=15,jump=20,jump_count=999)
