@@ -4,7 +4,7 @@
 
 import pygame
 import math
-from defaults import window, running, clock, fps, dir_path, camera
+from defaults import window, running, clock, fps, dir_path, camera, distance
 
 ##############################
 # COLLISIONS
@@ -181,6 +181,12 @@ class character:
     ##############################
 
     def handle(self,key_held,key_down,key_up,map):
+        camera.x = distance(
+            self.x + (self.w / 2),
+            self.y,
+            map.x + (map.w / 2),
+            map.y
+        )[0] - (pygame.display.Info().current_w / 2)
         self.sprite_list = eval(f"self.sprite_sheet.idle_{self.facing}")
         self.controller(key_held,key_down,key_up)
         self.physics(map)
@@ -192,7 +198,6 @@ class character:
     ##############################
 
     def render(self,x,y):
-        camera.x = self.x - (pygame.display.Info().current_w / 2)
     #    self.shadow.render(
      #       self.x,
       #      (pygame.display.Info().current_h / 2) + 2

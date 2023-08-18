@@ -15,7 +15,7 @@ class match:
     character = None
     stage = None
 
-match.character = testing_character
+match.character = lazarus
 match.stage = blank
 
 ##############################
