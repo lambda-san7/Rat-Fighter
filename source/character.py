@@ -165,7 +165,11 @@ class character:
     ##############################
 
     def handle(self,key_held,key_down,key_up,map):
-        camera.follow(self,10,2)
+        camera.follow(self,7,2)
+        if self.is_off_screen(self,1000):
+            print(self.x, self.y)
+            self.x = 600
+            self.y = 100
     #    camera.x = distance(
      #       self.x + (self.w / 2),
       #      self.y,
@@ -245,7 +249,6 @@ class character:
             self.y = map.y - self.h
             return
         if self.collisions.air: # In the Air
-            print("Air")
             self.sprite_list = eval(f"self.sprite_sheet.falling_{self.facing}")
             self.curr_speed = self.air_speed
         self.vertical_velocity -= 1
@@ -268,7 +271,6 @@ class character:
         ##############################
 
         if key_down == "w":
-            print("Jump")
             if self.curr_jumps <= 0:
                 return
             self.curr_jumps -= 1
@@ -298,6 +300,14 @@ class character:
             self.horizontal_velocity = -self.curr_speed
             self.facing = "right"
             self.sprite_list = self.sprite_sheet.run_right
+
+    def is_off_screen(self,subject,buffer=0):
+        if ((subject.x < (0 - buffer)) or 
+            (subject.x > (pygame.display.Info().current_w + buffer)) or 
+            (subject.y < (0 - buffer)) or 
+            (subject.y > (pygame.display.Info().current_h + buffer))):
+            return True
+        return False
     
 michael = character("michael",speed=18,jump=20,jump_count=1)
 bell = character("bell",speed=18,jump=20,jump_count=1)
