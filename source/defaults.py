@@ -11,6 +11,8 @@ import os
 
 pygame.init()
 
+pygame.mouse.set_visible(False)
+
 running = True
 
 ##############################
@@ -39,10 +41,28 @@ deltaTime = clock.tick(fps)/1000
 # CAMERA                   
 ##############################
 
-class camera:
-    x = 0
-    y = 0
-    scale = 1
+class new_camera:
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.scale = 1
+        self.horizontal_velocity = 0
+        self.vertical_velocity = 0
+    def follow(self,subject,speed_x,speed_y):
+        center_x = (pygame.display.Info().current_w) / 2
+        center_y = (pygame.display.Info().current_h) / 2
+
+        if ((center_x < subject.x - self.x)):
+            self.x += speed_x
+        if (center_x > subject.x - self.x):
+            self.x -= speed_x
+
+        if ((center_y < subject.y - self.y)):
+            self.y += speed_y
+        if (center_y > subject.y - self.y):
+            self.y -= speed_y
+
+camera = new_camera()
 
 ##############################
 # FILES
@@ -73,7 +93,7 @@ def handle_event():
     return [pygame.key.get_pressed(),key_down,key_up]
     
 ##############################
-# DISTANCE
+# MATH
 ##############################
 
 def distance(x1,y1,x2,y2):
@@ -82,3 +102,16 @@ def distance(x1,y1,x2,y2):
         (x2 + x1)/2,
         (y2 + y1)/2
     ]
+
+##############################
+# CURSOR
+##############################
+
+class sprite:
+    def __init__(self,file,name="sprite",w=20,h=20):
+        self.name = name
+        self.sprite = pygame.transform.scale(pygame.image.load(f"{dir_path}/assets/{file}"),(w,h))
+    def render(self,x,y):
+        window.blit(self.sprite,(x,y))
+
+cursor = sprite(file="cursor.gif").sprite

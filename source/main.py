@@ -3,9 +3,9 @@
 ##############################
 
 import pygame
-from defaults import window, running, clock, fps, handle_event
+from defaults import window, running, clock, fps, handle_event,cursor
 from character import michael, bell, lazarus, testing_character
-from map import testing, blank, old_ratt_town
+from map import testing, blank, sky_islands, old_ratt_town
 
 ##############################
 # MATCH
@@ -16,7 +16,7 @@ class match:
     stage = None
 
 match.character = lazarus
-match.stage = blank
+match.stage = sky_islands
 
 ##############################
 # SCENES
@@ -30,6 +30,7 @@ class game:
         window.fill((50,50,50))
         match.stage.render()
         match.character.handle(keys[0],keys[1],keys[2],old_ratt_town)
+        #window.blit(cursor,pygame.mouse.get_pos())
 
 scene = game
 

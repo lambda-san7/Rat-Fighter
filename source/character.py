@@ -32,8 +32,7 @@ class collisions:
             ): # on ground
             self.grounded = True
 
-        if ((object.y + object.h < map.y) and
-            (object.y > map.y + map.h)): # above the ground
+        if ((object.y + object.h < map.y)): # above the ground
             self.air = True
 
         if ((object.y + object.h > map.y) and
@@ -133,23 +132,8 @@ class sprite_sheet:
 '''
 
 ##############################
-# SPRITE ASSETS
-##############################
-
-shadow = sprite("shadow.gif",w=100,h=24).sprite
-
-##############################
 # CHARACTER CLASSES
 ##############################
-
-class character_shadow:
-    def __init__(self):
-        self.sprite = shadow
-        self.x = 0
-        self.y = 0
-    def render(self,x,y):
-        window.blit(self.sprite,(x - camera.x,y - camera.y))
-        #window.blit(self.sprite,(self.x - camera.x,self.y - camera.y))
 
 class character:
     def __init__(self,name,w=100,h=100,speed=18,jump=18,jump_count=1):
@@ -171,7 +155,7 @@ class character:
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
         self.terminal_velocity = 50
-        self.shadow = character_shadow()
+        self.shadow = sprite("shadow.gif",w=100,h=24).sprite
         self.control = False
         self.stun = 0
         self.collisions = collisions()
@@ -181,12 +165,13 @@ class character:
     ##############################
 
     def handle(self,key_held,key_down,key_up,map):
-        camera.x = distance(
-            self.x + (self.w / 2),
-            self.y,
-            map.x + (map.w / 2),
-            map.y
-        )[0] - (pygame.display.Info().current_w / 2)
+        camera.follow(self,10,2)
+    #    camera.x = distance(
+     #       self.x + (self.w / 2),
+      #      self.y,
+       #     map.x + (map.w / 2),
+        #    map.y
+        #)[0] - (pygame.display.Info().current_w / 2)
         self.sprite_list = eval(f"self.sprite_sheet.idle_{self.facing}")
         self.controller(key_held,key_down,key_up)
         self.physics(map)
@@ -260,6 +245,7 @@ class character:
             self.y = map.y - self.h
             return
         if self.collisions.air: # In the Air
+            print("Air")
             self.sprite_list = eval(f"self.sprite_sheet.falling_{self.facing}")
             self.curr_speed = self.air_speed
         self.vertical_velocity -= 1
@@ -282,6 +268,7 @@ class character:
         ##############################
 
         if key_down == "w":
+            print("Jump")
             if self.curr_jumps <= 0:
                 return
             self.curr_jumps -= 1

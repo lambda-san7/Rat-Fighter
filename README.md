@@ -9,9 +9,8 @@
     - Draedon
     - Pouli
     - Gabe
-    - Wraith
-    - Matt
     - Otto
+    - Wraith
 - Remake The Main Game (this time with cooldowns, better physics, and more dynamic methods for characters)
 
 walk to run:
