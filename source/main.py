@@ -16,7 +16,7 @@ class match:
     stage = None
 
 match.character = lazarus
-match.stage = sky_islands
+match.stage = old_ratt_town
 
 ##############################
 # SCENES
@@ -29,7 +29,7 @@ class game:
         keys = handle_event()
         window.fill((50,50,50))
         match.stage.render()
-        match.character.handle(keys[0],keys[1],keys[2],old_ratt_town)
+        match.character.handle(keys[0],keys[1],keys[2],match.stage)
         #window.blit(cursor,pygame.mouse.get_pos())
 
 scene = game

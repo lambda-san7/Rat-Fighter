@@ -309,7 +309,7 @@ class character:
             return True
         return False
     
-michael = character("michael",speed=18,jump=20,jump_count=1)
-bell = character("bell",speed=18,jump=20,jump_count=1)
+michael = character("michael",speed=15,jump=20,jump_count=1)
+bell = character("bell",speed=15,jump=20,jump_count=1)
 lazarus = character("lazarus",speed=20,jump=20,jump_count=2)
-testing_character = character("lazarus",speed=15,jump=20,jump_count=999)
+testing_character = character("testing",speed=15,jump=20,jump_count=999)

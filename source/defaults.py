@@ -52,10 +52,6 @@ class new_camera:
         center_x = (pygame.display.Info().current_w) / 2
         center_y = (pygame.display.Info().current_h) / 2
 
-        if self.is_off_screen(subject):
-            speed_x += 10
-            speed_y += 10
-
         if ((center_x < subject.x - self.x)):
             self.x += speed_x
         if (center_x > subject.x - self.x):

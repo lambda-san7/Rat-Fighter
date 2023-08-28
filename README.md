@@ -11,6 +11,14 @@
     - Gabe
     - Otto
     - Wraith
+- maps
+    - Sky_island
+    - Old_Ratt_Town
+    - Ratt_Caverns
+    - Draedons_Airship
+    - Rataway
+    - Apex_Laboratories
+    - 
 - Remake The Main Game (this time with cooldowns, better physics, and more dynamic methods for characters)
 
 walk to run:

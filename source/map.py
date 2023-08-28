@@ -44,4 +44,4 @@ class map:
 testing = map("testing")
 blank = map("blank")
 sky_islands = map("Sky Islands")
-old_ratt_town = map("Old Ratt Town")
+old_ratt_town = map("Old Ratt Town",h=800)
