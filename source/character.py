@@ -115,21 +115,22 @@ class sprite_sheet:
         ##############################
         # SPRITE ASSETS
         ##############################
-'''
-        self.attack_left = [
-            sprite(f"{name}/attack_1.gif").sprite,
-            sprite(f"{name}/attack_2.gif").sprite,
-            sprite(f"{name}/attack_3.gif").sprite,
-            sprite(f"{name}/attack_4.gif").sprite,
+
+        self.crouch_left = [
+            sprite(f"{name}/crouch_1.gif").sprite,
+            sprite(f"{name}/crouch_2.gif").sprite,
+            sprite(f"{name}/crouch_3.gif").sprite,
+            sprite(f"{name}/crouch_4.gif").sprite,
         ]
         
-        self.attack_right = [
-            pygame.transform.flip(self.attack_left[0], True, False),
-            pygame.transform.flip(self.attack_left[1], True, False),
-            pygame.transform.flip(self.attack_left[2], True, False),
-            pygame.transform.flip(self.attack_left[3], True, False),
+        self.crouch_right = [
+            pygame.transform.flip(self.crouch_left[0], True, False),
+            pygame.transform.flip(self.crouch_left[1], True, False),
+            pygame.transform.flip(self.crouch_left[2], True, False),
+            pygame.transform.flip(self.crouch_left[3], True, False),
         ]
-'''
+
+
 
 ##############################
 # CHARACTER CLASSES
@@ -286,13 +287,6 @@ class character:
             self.sprite_list = self.sprite_sheet.run_left
 
         ##############################
-        # CHARACTER >> CONTROLLER >> S
-        ##############################
-
-        if key_held[pygame.K_s]:
-            self.vertical_velocity -= 5
-
-        ##############################
         # CHARACTER >> CONTROLLER >> D
         ##############################
 
@@ -300,6 +294,14 @@ class character:
             self.horizontal_velocity = -self.curr_speed
             self.facing = "right"
             self.sprite_list = self.sprite_sheet.run_right
+
+        ##############################
+        # CHARACTER >> CONTROLLER >> S
+        ##############################
+
+        if key_held[pygame.K_s]:
+            self.vertical_velocity -= 5
+            self.sprite_list = eval(f"self.sprite_sheet.crouch_{self.facing}")
 
     def is_off_screen(self,subject,buffer=0):
         if ((subject.x < (0 - buffer)) or 
