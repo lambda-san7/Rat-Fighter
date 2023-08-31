@@ -4,7 +4,7 @@
 
 import pygame
 from defaults import window, running, clock, fps, handle_event,cursor
-from character import michael, bell, lazarus, testing_character
+from character import michael, bell, lazarus#, testing_character
 from map import testing, blank, sky_islands, old_ratt_town
 
 ##############################
@@ -15,7 +15,7 @@ class match:
     character = None
     stage = None
 
-match.character = michael
+match.character = lazarus
 
 match.stage = old_ratt_town
 

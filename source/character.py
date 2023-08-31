@@ -116,18 +116,18 @@ class sprite_sheet:
         # SPRITE ASSETS
         ##############################
 
-        self.crouch_left = [
-            sprite(f"{name}/crouch_1.gif").sprite,
-            sprite(f"{name}/crouch_2.gif").sprite,
-            sprite(f"{name}/crouch_3.gif").sprite,
-            sprite(f"{name}/crouch_4.gif").sprite,
+        self.walk_left = [
+            sprite(f"{name}/walk_1.gif").sprite,
+            sprite(f"{name}/walk_2.gif").sprite,
+            sprite(f"{name}/walk_3.gif").sprite,
+            sprite(f"{name}/walk_4.gif").sprite,
         ]
         
-        self.crouch_right = [
-            pygame.transform.flip(self.crouch_left[0], True, False),
-            pygame.transform.flip(self.crouch_left[1], True, False),
-            pygame.transform.flip(self.crouch_left[2], True, False),
-            pygame.transform.flip(self.crouch_left[3], True, False),
+        self.walk_right = [
+            pygame.transform.flip(self.walk_left[0], True, False),
+            pygame.transform.flip(self.walk_left[1], True, False),
+            pygame.transform.flip(self.walk_left[2], True, False),
+            pygame.transform.flip(self.walk_left[3], True, False),
         ]
 
 
@@ -146,11 +146,15 @@ class character:
         self.sprite = 0
         self.facing = "left"
         self.curr_speed = 0
-        self.speed = speed
+        self.walk_speed = speed - 5
+        self.run_speed = speed
+        self.ground_speed = self.walk_speed
         self.air_speed = speed + 5
         self.jump = jump
         self.jumps = jump_count
         self.curr_jumps = jump_count
+        self.walking = 0
+        self.walked = False
         self.x = 600
         self.y = 100
         self.horizontal_velocity = 0
@@ -241,7 +245,7 @@ class character:
 
         if self.collisions.grounded: # On Ground
             self.control = True
-            self.curr_speed = self.speed
+            self.curr_speed = self.ground_speed
             self.vertical_velocity = 0
             self.curr_jumps = self.jumps
             return
@@ -259,6 +263,7 @@ class character:
     ##############################
 
     def controller(self,key_held,key_down,key_up):
+        self.walked = False
 
         if self.stun != 0:
             self.control = False
@@ -284,7 +289,13 @@ class character:
         if key_held[pygame.K_a]:
             self.horizontal_velocity = self.curr_speed
             self.facing = "left"
-            self.sprite_list = self.sprite_sheet.run_left
+            #self.sprite_list = self.sprite_sheet.run_left
+            self.sprite_list = self.sprite_sheet.walk_left
+            self.walked = True
+            self.walking += 1
+            if self.walking >= 600:
+                self.sprite_list = self.sprite_sheet.walk_left
+                self.curr_speed 
 
         ##############################
         # CHARACTER >> CONTROLLER >> D
@@ -293,7 +304,10 @@ class character:
         if key_held[pygame.K_d]:
             self.horizontal_velocity = -self.curr_speed
             self.facing = "right"
-            self.sprite_list = self.sprite_sheet.run_right
+            #self.sprite_list = self.sprite_sheet.run_right
+            self.sprite_list = self.sprite_sheet.walk_right
+            self.walked = True
+            self.walking += 1
 
         ##############################
         # CHARACTER >> CONTROLLER >> S
@@ -302,6 +316,9 @@ class character:
         if key_held[pygame.K_s]:
             self.vertical_velocity -= 5
             #self.sprite_list = eval(f"self.sprite_sheet.crouch_{self.facing}")
+
+        if not self.walked:
+            self.walking = 0
 
     def is_off_screen(self,subject,buffer=0):
         if ((subject.x < (0 - buffer)) or 
@@ -314,4 +331,4 @@ class character:
 michael = character("michael",speed=15,jump=20,jump_count=2)
 bell = character("bell",speed=15,jump=20,jump_count=2)
 lazarus = character("lazarus",speed=20,jump=20,jump_count=2)
-testing_character = character("testing",speed=15,jump=20,jump_count=999)
+#testing_character = character("testing",speed=15,jump=20,jump_count=999)
