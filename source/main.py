@@ -15,7 +15,8 @@ class match:
     character = None
     stage = None
 
-match.character = lazarus
+match.character = michael
+
 match.stage = old_ratt_town
 
 ##############################

@@ -166,7 +166,7 @@ class character:
     ##############################
 
     def handle(self,key_held,key_down,key_up,map):
-        camera.follow(self,7,2)
+        camera.follow(self,10,5)
         if self.is_off_screen(self,1000):
             print(self.x, self.y)
             self.x = 600
@@ -301,7 +301,7 @@ class character:
 
         if key_held[pygame.K_s]:
             self.vertical_velocity -= 5
-            self.sprite_list = eval(f"self.sprite_sheet.crouch_{self.facing}")
+            #self.sprite_list = eval(f"self.sprite_sheet.crouch_{self.facing}")
 
     def is_off_screen(self,subject,buffer=0):
         if ((subject.x < (0 - buffer)) or 
@@ -311,7 +311,7 @@ class character:
             return True
         return False
     
-michael = character("michael",speed=15,jump=20,jump_count=1)
-bell = character("bell",speed=15,jump=20,jump_count=1)
+michael = character("michael",speed=15,jump=20,jump_count=2)
+bell = character("bell",speed=15,jump=20,jump_count=2)
 lazarus = character("lazarus",speed=20,jump=20,jump_count=2)
 testing_character = character("testing",speed=15,jump=20,jump_count=999)

@@ -62,6 +62,13 @@ class new_camera:
         if (center_y > subject.y - self.y):
             self.y -= speed_y
 
+    def follow_2(self,subject,speed_x,speed_y):
+        center_x = (pygame.display.Info().current_w) / 2
+        center_y = (pygame.display.Info().current_h) / 2
+
+        self.horizontal_velocity = speed_x
+
+        self.x -= self.horizontal_velocity
     def is_off_screen(self,subject):
         if ((subject.x <= camera.x) or 
             (subject.x >= camera.x + pygame.display.Info().current_w) or 
