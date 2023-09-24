@@ -131,7 +131,6 @@ class sprite_sheet:
         ]
 
 
-
 ##############################
 # CHARACTER CLASSES
 ##############################
@@ -291,11 +290,12 @@ class character:
             self.facing = "left"
             #self.sprite_list = self.sprite_sheet.run_left
             self.sprite_list = self.sprite_sheet.walk_left
+            self.ground_speed = self.walk_speed
             self.walked = True
             self.walking += 1
-            if self.walking >= 600:
-                self.sprite_list = self.sprite_sheet.walk_left
-                self.curr_speed 
+            if self.walking >= 25:
+                self.sprite_list = self.sprite_sheet.run_left
+                self.ground_speed = self.run_speed
 
         ##############################
         # CHARACTER >> CONTROLLER >> D
@@ -306,8 +306,12 @@ class character:
             self.facing = "right"
             #self.sprite_list = self.sprite_sheet.run_right
             self.sprite_list = self.sprite_sheet.walk_right
+            self.ground_speed = self.walk_speed
             self.walked = True
             self.walking += 1
+            if self.walking >= 25:
+                self.sprite_list = self.sprite_sheet.run_right
+                self.ground_speed = self.run_speed
 
         ##############################
         # CHARACTER >> CONTROLLER >> S

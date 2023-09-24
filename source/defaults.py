@@ -48,27 +48,14 @@ class new_camera:
         self.scale = 1
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
+        self.target_x = None
+        self.target_y = None
     def follow(self,subject,speed_x,speed_y):
         center_x = (pygame.display.Info().current_w) / 2
         center_y = (pygame.display.Info().current_h) / 2
 
-        if ((center_x < subject.x - self.x)):
-            self.x += speed_x
-        if (center_x > subject.x - self.x):
-            self.x -= speed_x
-
-        if ((center_y < subject.y - self.y)):
-            self.y += speed_y
-        if (center_y > subject.y - self.y):
-            self.y -= speed_y
-
-    def follow_2(self,subject,speed_x,speed_y):
-        center_x = (pygame.display.Info().current_w) / 2
-        center_y = (pygame.display.Info().current_h) / 2
-
-        self.horizontal_velocity = speed_x
-
-        self.x -= self.horizontal_velocity
+        self.x = midpoint(self.x,self.y,subject.x,subject.y)[0] - (pygame.display.Info().current_h) / 2
+    
     def is_off_screen(self,subject):
         if ((subject.x <= camera.x) or 
             (subject.x >= camera.x + pygame.display.Info().current_w) or 
@@ -113,11 +100,16 @@ def handle_event():
 ##############################
 
 def distance(x1,y1,x2,y2):
-    #return (x2 - x1)**2 + (y2 - y1)**2
     return [
         (x2 + x1)/2,
         (y2 + y1)/2
     ]
+
+def midpoint(x1, y1, x2, y2):
+    return [(x1 + x2) / 2,(y1 + y2) / 2]
+
+def quarterpoint(x1, y1, x2, y2):
+    return [(x1 + x2) / 4,(y1 + y2) / 4]
 
 ##############################
 # CURSOR
